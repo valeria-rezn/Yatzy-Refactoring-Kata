@@ -1,251 +1,246 @@
 #include "yatzy.hpp"
 #include <string.h>
 
-int Yatzy::Chance(int d1, int d2, int d3, int d4, int d5)
+const int NUMBER_OF_DICES = 5;
+
+
+int Yatzy::Chance()
 {
-    int total = 0;
-    total += d1;
-    total += d2;
-    total += d3;
-    total += d4;
-    total += d5;
-    return total;
+    int score = 0;
+    for (int dice_number = 0; dice_number < NUMBER_OF_DICES; dice_number++)
+    {
+        score += dice[dice_number];
+    }
+    return score;
 }
 
 
-int Yatzy::yatzy(int dice[])
+int Yatzy::YatzyCombo()
 {
-    int counts[6] = {0,0,0,0,0,0};
-    for (int i = 0; i != 5; i++)
-        counts[dice[i]-1]++;
-    for (int i = 0; i != 6; i++)
-        if (counts[i] == 5)
-            return 50;
-    return 0;
+    int score = 0;
+    for (int dice_number = 0; dice_number < NUMBER_OF_DICES - 1; dice_number++)
+    {
+        if (dice[dice_number] != dice[dice_number + 1])
+            return 0;
+    }
+    return 50;
+
 }
 
-int Yatzy::Ones(int d1, int d2, int d3, int d4, int d5) {
-    int sum = 0;
-    if (d1 == 1) sum++;
-    if (d2 == 1) sum++;
-    if (d3 == 1) sum++;
-    if (d4 == 1) sum++;
-    if (d5 == 1) 
-        sum++;
-
-    return sum;
+int Yatzy::Ones() {
+    int score = 0;
+    for (int dice_number = 0; dice_number < NUMBER_OF_DICES; dice_number++)
+    {
+        if (dice[dice_number] == 1)
+            score++;
+    }
+    return score;
 }
 
-int Yatzy::Twos(int d1, int d2, int d3, int d4, int d5) {
-    int sum = 0;
-    if (d1 == 2) sum += 2;
-    if (d2 == 2) sum += 2;
-    if (d3 == 2) sum += 2;
-    if (d4 == 2) sum += 2;
-    if (d5 == 2) sum += 2;
-    return sum;
+int Yatzy::Twos() {
+    int score = 0;
+    for (int dice_number = 0; dice_number < NUMBER_OF_DICES; dice_number++)
+    {
+        if (dice[dice_number] == 2)
+            score += 2;
+    }
+    return score;
 }
 
 
-int Yatzy::Threes(int d1, int d2, int d3, int d4, int d5) {
-    int s;    
-    s = 0;
-    if (d1 == 3) s += 3;
-    if (d2 == 3) s += 3;
-    if (d3 == 3) s += 3;
-    if (d4 == 3) s += 3;
-    if (d5 == 3) s += 3;
-    return s;
+int Yatzy::Threes() {
+  
+    int score = 0;
+    for (int dice_number = 0; dice_number < NUMBER_OF_DICES; dice_number++)
+    {
+        if (dice[dice_number] == 3)
+            score += 3;
+    }
+    return score;
 }
 
 Yatzy::Yatzy()
 {
 }
 
-Yatzy::Yatzy(int d1, int d2, int d3, int d4, int _5)
+Yatzy::Yatzy(int d1, int d2, int d3, int d4, int d5)
 {
     dice = new int[5];
     dice[0] = d1;
     dice[1] = d2;
     dice[2] = d3;
     dice[3] = d4;
-    dice[4] = _5;
+    dice[4] = d5;
 }
 
 int Yatzy::Fours()
 {
-    int sum;    
-    sum = 0;
-    for (int at = 0; at != 5; at++) {
-        if (dice[at] == 4) {
-            sum += 4;
-        }
+    int score = 0;
+    for (int dice_number = 0; dice_number < NUMBER_OF_DICES; dice_number++)
+    {
+        if (dice[dice_number] == 4)
+            score += 4;
     }
-    return sum;
+    return score;
 }
 
 
 int Yatzy::Fives()
 {
-    int s = 0;
-    int i;
-    for (i = 0; i < 5; i++) 
-        if (dice[i] == 5)
-            s = s + 5;
-    return s;
-}
-
-int Yatzy::sixes()
-{
-    int sum = 0;
-    for (int at = 0; at < 5; at++) 
-        if (dice[at] == 6)
-            sum = sum + 6;
-    return sum;
-}
-
-int Yatzy::ScorePair(int d1, int d2, int d3, int d4, int d5)
-{
-    int counts[6] = {0,0,0,0,0,0};
-    counts[d1-1]++;
-    counts[d2-1]++;
-    counts[d3-1]++;
-    counts[d4-1]++;
-    counts[d5-1]++;
-    int at;
-    for (at = 0; at != 6; at++)
-        if (counts[6-at-1] == 2)
-            return (6-at)*2;
-    return 0;
-}
-
-int Yatzy::TwoPair(int d1, int d2, int d3, int d4, int d5)
-{
-    int counts[6] = {0};
-    counts[d1-1]++;
-    counts[d2-1]++;
-    counts[d3-1]++;
-    counts[d4-1]++;
-    counts[d5-1]++;
-    int n = 0;
     int score = 0;
-    for (int i = 0; i < 6; i += 1)
-        if (counts[6-i-1] >= 2) {
-            n++;
-            score += (6-i);
-        }        
-    if (n == 2)
+    for (int dice_number = 0; dice_number < NUMBER_OF_DICES; dice_number++)
+    {
+        if (dice[dice_number] == 5)
+            score += 5;
+    }
+    return score;
+}
+
+int Yatzy::Sixes()
+{
+    int score = 0;
+    for (int dice_number = 0; dice_number < NUMBER_OF_DICES; dice_number++)
+    {
+        if (dice[dice_number] == 6)
+            score += 6;
+    }
+    return score;
+}
+
+const int MAX_POINT = 6;
+
+void Yatzy::CountNumberOfPoint(int *count_point) {
+
+    for (int dice_number = 0; dice_number < NUMBER_OF_DICES; dice_number++)
+    {
+        count_point[dice[dice_number] - 1]++;
+    }
+}
+
+int Yatzy::OnePair()
+{
+    int count_point[MAX_POINT] = {};
+    CountNumberOfPoint(count_point);
+  
+    for (int dice_point = MAX_POINT-1; dice_point > 0 ; dice_point--)
+    {
+        if (count_point[dice_point] >= 2)
+            return (dice_point+1) * 2;
+    }
+    return 0;
+   
+}
+
+int Yatzy::TwoPair()
+{
+    int score = 0;
+    int count_point[MAX_POINT] = {};
+    int count_pair = 0;
+    CountNumberOfPoint(count_point);
+
+    for (int dice_point = MAX_POINT-1; dice_point > 0; dice_point--)
+    {
+        if (count_point[dice_point] >= 2) {
+            count_pair++;
+            score += (dice_point+1);
+        }
+    }
+    if (count_pair == 2)
         return score * 2;
     else
         return 0;
 }
 
-int Yatzy::FourOfAKind(int _1, int _2, int d3, int d4, int d5)
+int Yatzy::FourOfAKind()
 {
-    int * tallies;
-    tallies = new int[6];
-    tallies[0] = tallies[1] = tallies[2] = 0;
-    tallies[3] = tallies[4] = tallies[5] = 0;
-    tallies[_1-1]++;
-    tallies[_2-1]++;
-    tallies[d3-1]++;
-    tallies[d4-1]++;
-    tallies[d5-1]++;
-    for (int i = 0; i < 6; i++)
-        if (tallies[i] >= 4)
-            return (i+1) * 4;
+    int count_point[MAX_POINT] = {};
+    CountNumberOfPoint(count_point);
+      
+    for (int dice_point = 0; dice_point < MAX_POINT; dice_point++)
+    {
+        if (count_point[dice_point] >= 4)
+            return (dice_point + 1) * 4;
+    } 
     return 0;
 }
 
-int Yatzy::ThreeOfAKind(int d1, int d2, int d3, int d4, int d5)
+int Yatzy::ThreeOfAKind()
 {
-    int * t;
-    t = new int[6];
-    t[0] = t[1] = t[2] = 0;
-    t[3] = t[4] = t[5] = 0;
-    t[d1-1]++;
-    t[d2-1]++;
-    t[d3-1]++;
-    t[d4-1]++;
-    t[d5-1]++;
-    for (int i = 0; i < 6; i++)
-        if (t[i] >= 3)
-            return (i+1) * 3;
+    int count_point[MAX_POINT] = {};
+    CountNumberOfPoint(count_point);
+       
+    for (int dice_point = 0; dice_point < MAX_POINT; dice_point++)
+    {
+        if (count_point[dice_point] >= 3)
+            return (dice_point + 1) * 3;
+    }
     return 0;
 }
 
 
-int Yatzy::SmallStraight(int d1, int d2, int d3, int d4, int d5)
+int Yatzy::SmallStraight()
 {
-    int* tallies =new int[6];
-    memset(tallies, 0, sizeof(int)*6);
-    tallies[d1-1] += 1;
-    tallies[d2-1] += 1;
-    tallies[d3-1] += 1;
-    tallies[d4-1] += 1;
-    tallies[d5-1] += 1;
-    if (tallies[0] == 1 &&
-        tallies[1] == 1 &&
-        tallies[2] == 1 &&
-        tallies[3] == 1 &&
-        tallies[4] == 1)
+    int count_point[MAX_POINT] = {};
+    bool straight_all = true;
+    CountNumberOfPoint(count_point);
+
+    for (int dice_point = 0; dice_point < MAX_POINT-1; dice_point++)
+    {
+        if (count_point[dice_point] != 1)
+        {
+            straight_all = false;
+            break;
+        }
+    }
+    if (straight_all)
         return 15;
-    return 0;
+    else
+        return 0;
 }
 
-int Yatzy::LargeStraight(int d1, int d2, int d3, int d4, int d5)
+int Yatzy::LargeStraight()
 {
-    int* tallies = new int[6];
-    memset(tallies, 0, sizeof(*tallies)*6);
-    tallies[d1-1] += 1;
-    tallies[d2-1] += 1;
-    tallies[d3-1] += 1;
-    tallies[d4-1] += 1;
-    tallies[d5-1] += 1;
-    if (tallies[1] == 1 &&
-        tallies[2] == 1 &&
-        tallies[3] == 1 &&
-        tallies[4] == 1
-        && tallies[5] == 1)
+    
+    int count_point[MAX_POINT] = {};
+    bool straight_all = true;
+    CountNumberOfPoint(count_point);
+
+    for (int dice_point = 1; dice_point < MAX_POINT; dice_point++)
+    {
+        if (count_point[dice_point] != 1)
+        {
+            straight_all = false;
+            break;
+        }
+    }
+    if (straight_all)
         return 20;
-    return 0;
+    else
+        return 0;
 }
 
 
-int Yatzy::FullHouse(int d1, int d2, int d3, int d4, int d5)
+int Yatzy::FullHouse()
 {
-    int* tallies;
-    bool _2 = false;
-    int i;
-    int _2_at = 0;
-    bool _3 = false;
-    int _3_at = 0;
 
-
-
-
-    tallies = new int[6];
-    memset(tallies, 0, sizeof(int)*6);
-    tallies[d1-1] += 1;
-    tallies[d2-1] += 1;
-    tallies[d3-1] += 1;
-    tallies[d4-1] += 1;
-    tallies[d5-1] += 1;
-
-    for (i = 0; i != 6; i += 1)
-        if (tallies[i] == 2) {
-            _2 = true;
-            _2_at = i+1;
+    int count_point[MAX_POINT] = {};
+    CountNumberOfPoint(count_point);
+    bool straight_two = false;
+    bool straight_three = false;
+    int score = 0;
+    for (int dice_point = 0; dice_point < MAX_POINT; dice_point++)
+    {
+        if (count_point[dice_point] == 2) {
+            straight_two = true;
+            score += (dice_point + 1)*2;
         }
-
-    for (i = 0; i != 6; i += 1)
-        if (tallies[i] == 3) {
-            _3 = true;
-            _3_at = i+1;
+        if (count_point[dice_point] == 3) {
+            straight_three = true;
+            score += (dice_point + 1)*3;
         }
-
-    if (_2 && _3)
-        return _2_at * 2 + _3_at * 3;
+    }
+    if (straight_two && straight_three)
+        return score;
     else
         return 0;
 }
